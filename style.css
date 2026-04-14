@@ -1,0 +1,29 @@
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+body { background: #f0f2f5; padding: 20px; }
+.container { max-width: 1200px; margin: 0 auto; }
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.header h1 { color: #1f2937; }
+.breadcrumb { background: white; padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; }
+.breadcrumb a { color: #3b82f6; text-decoration: none; margin: 0 4px; }
+.toolbar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+button { padding: 10px 16px; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; }
+button:hover { background: #2563eb; }
+input[type="file"] { padding: 8px; }
+.loading { text-align: center; padding: 20px; color: #6b7280; }
+.error { color: #dc2626; background: #fee2e2; padding: 12px; border-radius: 6px; margin-bottom: 16px; }
+.hidden { display: none; }
+.file-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+.file-item { background: white; padding: 16px; border-radius: 8px; border: 1px solid #e5e7eb; }
+.file-item .icon { font-size: 32px; margin-bottom: 8px; }
+.file-item .name { font-weight: 600; word-break: break-all; margin-bottom: 8px; color: #1f2937; }
+.file-item .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.file-item .actions button, .file-item .actions a { font-size: 12px; padding: 6px 10px; }
+.file-item .actions a { background: #10b981; color: white; border-radius: 6px; text-decoration: none; display: inline-block; }
+.thumbnail { width: 100%; height: 120px; object-fit: cover; border-radius: 4px; margin-bottom: 8px; }
+
+/* 登录页样式 */
+.login-page { display: flex; justify-content: center; align-items: center; height: 100vh; }
+.login-box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 400px; }
+.login-box h1 { margin-bottom: 10px; color: #1f2937; }
+.login-box p { color: #6b7280; margin-bottom: 20px; }
+.login-box input { width: 100%; padding: 12px; margin-bottom: 16px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 16px; }
