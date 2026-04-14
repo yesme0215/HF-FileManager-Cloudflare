@@ -1,9 +1,9 @@
-const AUTH_PASSWORD = env.AUTH_PASSWORD; // 从环境变量读取密码
 const SESSION_COOKIE = 'hf_manager_session';
 const VALID_SESSION = 'authenticated'; // 简单会话标识
 
 export async function onRequest(context) {
   const { request, env } = context;
+  const AUTH_PASSWORD = env.AUTH_PASSWORD; // 从环境变量读取密码
   const url = new URL(request.url);
 
   // 放行登录页面和登录接口
