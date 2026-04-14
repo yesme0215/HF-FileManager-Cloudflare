@@ -11,26 +11,22 @@
       <h1>HF File Manager</h1>
       <div id="repoInfo"></div>
     </div>
-    
-    <!-- 面包屑导航 -->
+
     <div id="breadcrumb" class="breadcrumb"></div>
-    
-    <!-- 工具栏 -->
+
     <div class="toolbar">
       <input type="file" id="fileInput" multiple>
       <button onclick="uploadFiles()">📤 上传文件</button>
       <button onclick="createFolder()">📁 新建文件夹</button>
       <button onclick="refresh()">🔄 刷新</button>
     </div>
-    
-    <!-- 加载状态 -->
+
     <div id="loading" class="loading hidden">加载中...</div>
     <div id="error" class="error hidden"></div>
-    
-    <!-- 文件列表 -->
+
     <div id="fileList" class="file-list"></div>
   </div>
-  
+
   <script src="script.js"></script>
 </body>
 </html>
