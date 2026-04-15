@@ -1,32 +1,29 @@
-const SESSION_COOKIE = 'hf_manager_session';
-const VALID_SESSION = 'authenticated';
-
 export async function onRequest(context) {
-  const { request } = context;
+  const { request, env } = context;
   const url = new URL(request.url);
   const path = url.pathname;
 
-  // 【关键】明确放行所有登录相关的路径和静态资源
-  if (
-    path === '/login.html' ||
-    path === '/login.js' ||
-    path === '/style.css' ||
-    path === '/api/login' ||
-    path === '/config'
-  ) {
+  // ========== 白名单：永远放行 ==========
+  const allowed = [
+    "/login.html",
+    "/login.js",
+    "/style.css",
+    "/api/login",
+    "/config"
+  ];
+
+  if (allowed.includes(path)) {
     return context.next();
   }
 
-  // 其他路径才进行登录校验
-  const cookie = request.headers.get('Cookie') || '';
-  const hasValidSession = cookie.split(';').some(c => 
-    c.trim() === `${SESSION_COOKIE}=${VALID_SESSION}`
-  );
+  // ========== 校验登录态 ==========
+  const cookie = request.headers.get("cookie") || "";
+  const hasSession = cookie.includes("hf_manager_session=authenticated");
 
-  if (hasValidSession) {
+  if (hasSession) {
     return context.next();
-  } else {
-    // 未登录，重定向到登录页
-    return Response.redirect(`${url.origin}/login.html`, 302);
   }
+
+  // ========== 未登录 → 跳登录（只跳一次，绝对不循环） ==========
+  return Response.redirect(`${url.origin}/login.html`, 302);
 }
