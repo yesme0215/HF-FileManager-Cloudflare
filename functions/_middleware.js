@@ -6,20 +6,18 @@ export async function onRequest(context) {
   const url = new URL(request.url);
   const path = url.pathname;
 
-  // 只放行登录相关的资源
-  const publicPaths = [
-    '/login.html',
-    '/login.js',
-    '/style.css',
-    '/api/login',
-    '/config'
-  ];
-
-  if (publicPaths.includes(path)) {
+  // 【关键】明确放行所有登录相关的路径和静态资源
+  if (
+    path === '/login.html' ||
+    path === '/login.js' ||
+    path === '/style.css' ||
+    path === '/api/login' ||
+    path === '/config'
+  ) {
     return context.next();
   }
 
-  // 检查 Cookie
+  // 其他路径才进行登录校验
   const cookie = request.headers.get('Cookie') || '';
   const hasValidSession = cookie.split(';').some(c => 
     c.trim() === `${SESSION_COOKIE}=${VALID_SESSION}`
@@ -27,8 +25,8 @@ export async function onRequest(context) {
 
   if (hasValidSession) {
     return context.next();
+  } else {
+    // 未登录，重定向到登录页
+    return Response.redirect(`${url.origin}/login.html`, 302);
   }
-
-  // 未登录，强制跳转
-  return Response.redirect(`${url.origin}/login.html`, 302);
 }
