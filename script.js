@@ -1,31 +1,44 @@
 let currentPath = '';
 let config = {
-  repoType: '',
+  repoType: 'models',
   repoId: '',
   hfMirror: 'https://hf-mirror.com'
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
-  await loadConfig();
-  await refresh();
+  try {
+    await loadConfig();
+    await refresh();
+  } catch (e) {
+    console.error(e);
+    showError('初始化失败，请检查环境变量');
+  }
 });
 
 async function loadConfig() {
   const res = await fetch('/config');
-  config = await res.json();
-  document.getElementById('repoInfo').textContent = `${config.repoType}/${config.repoId}`;
+  if (!res.ok) throw new Error('Config load failed');
+  const data = await res.json();
+  config = { ...config, ...data };
+  const repoInfo = document.getElementById('repoInfo');
+  if (repoInfo) repoInfo.textContent = `${config.repoType}/${config.repoId}`;
 }
 
 function showLoading(show) {
-  document.getElementById('loading').classList.toggle('hidden', !show);
+  const el = document.getElementById('loading');
+  if (el) el.classList.toggle('hidden', !show);
 }
 
 function showError(msg) {
   const el = document.getElementById('error');
-  el.textContent = msg;
-  el.classList.remove('hidden');
-  setTimeout(() => el.classList.add('hidden'), 4000);
+  if (el) {
+    el.textContent = msg;
+    el.classList.remove('hidden');
+    setTimeout(() => el.classList.add('hidden'), 5000);
+  }
 }
+
+// ... 后面的代码保持原样，不要动 ...
 
 async function refresh() {
   showLoading(true);
